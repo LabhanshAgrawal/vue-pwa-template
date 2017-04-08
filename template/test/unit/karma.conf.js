@@ -13,7 +13,7 @@ module.exports = function (config) {
     // 2. add it to the `browsers` array below.
     browsers: ['PhantomJS'],
     frameworks: ['mocha', 'sinon-chai'],
-    reporters: ['spec', 'coverage', 'remap-coverage'],
+    reporters: ['spec', 'coverage', 'remap-coverage', 'phantomjs-shim'],
     files: ['./index.{{#if_eq compiler "typescript"}}ts{{else}}js{{/if_eq}}'],
     preprocessors: {
       './index.{{#if_eq compiler "typescript"}}ts{{else}}js{{/if_eq}}': ['webpack', 'sourcemap']
