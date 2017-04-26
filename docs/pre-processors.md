@@ -28,5 +28,5 @@ export default withRender({
 
 ### A note on SASS syntax
 
-- `scss` corresponds to the CSS-superset syntax (with curly braces and semicolones).
+- `scss` corresponds to the CSS-superset syntax (with curly braces and semicolons).
 - `sass` corresponds to the indentation-based syntax.
