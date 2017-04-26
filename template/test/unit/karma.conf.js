@@ -12,8 +12,8 @@ module.exports = function (config) {
     //    http://karma-runner.github.io/0.13/config/browsers.html
     // 2. add it to the `browsers` array below.
     browsers: ['PhantomJS'],
-    frameworks: ['mocha', 'sinon-chai'],
-    reporters: ['spec', 'coverage', 'remap-coverage', 'phantomjs-shim'],
+    frameworks: ['mocha', 'sinon-chai', 'phantomjs-shim'],
+    reporters: ['spec', 'coverage', 'remap-coverage'],
     files: ['./index.{{#if_eq compiler "typescript"}}ts{{else}}js{{/if_eq}}'],
     preprocessors: {
       './index.{{#if_eq compiler "typescript"}}ts{{else}}js{{/if_eq}}': ['webpack', 'sourcemap']
