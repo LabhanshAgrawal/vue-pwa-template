@@ -19,9 +19,9 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 module.exports = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
-  },
+  },{{#unless_eq compiler "typescript"}}
   // cheap-module-eval-source-map is faster for development, but it seems to not work properly here
-  devtool: '#inline-source-map',
+  devtool: '#inline-source-map',{{/unless_eq}}
   plugins: [
     new webpack.DefinePlugin({
       'process.env': config.dev.env
@@ -35,7 +35,12 @@ module.exports = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true
     }),
-    new FriendlyErrorsPlugin()
+    new FriendlyErrorsPlugin(){{#if_eq compiler "typescript"}},
+    // devtool option doesn't output typescript sourcemaps to karma
+    new webpack.SourceMapDevToolPlugin({
+      filename: null, // if no value is provided the sourcemap is inlined
+      test: /\.(ts|js|html)($|\?)/i
+    }){{/if_eq}}
   ]
 })
 
