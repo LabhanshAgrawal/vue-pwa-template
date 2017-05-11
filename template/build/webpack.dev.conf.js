@@ -39,7 +39,7 @@ module.exports = merge(baseWebpackConfig, {
     // devtool option doesn't output typescript sourcemaps to karma
     new webpack.SourceMapDevToolPlugin({
       filename: null, // if no value is provided the sourcemap is inlined
-      test: /\.(ts|js|html)($|\?)/i
+      test: /\.(ts|js|vue|html)($|\?)/i
     }){{/if_eq}}
   ]
 })

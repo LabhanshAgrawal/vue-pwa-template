@@ -1,6 +1,7 @@
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
+var vueLoaderConfig = require('./vue-loader.conf')
 var vueTemplateLoaderConfig = require('./vue-template-loader.conf')
 
 function resolve (dir) {
@@ -19,7 +20,7 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', {{#if_eq compiler "typescript"}}'.ts', {{/if_eq}}'.json'],
+    extensions: ['.js', '.vue', {{#if_eq compiler "typescript"}}'.ts', {{/if_eq}}'.json'],
     alias: {
       {{#if_eq build "standalone"}}
       'vue$': 'vue/dist/vue.esm.js'
@@ -34,7 +35,7 @@ module.exports = {
     rules: [
       {{#eslint}}
       {
-        test: /\.js$/,
+        test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src'), resolve('test')],
@@ -45,7 +46,7 @@ module.exports = {
       {{/eslint}}
       {{#tslint}}
       {
-        test: /\.ts$/,
+        test: /\.ts$/, // tslint doesn't support vue files
         enforce: 'pre',
         loader: 'tslint-loader',
         include: [resolve('src'), resolve('test')],
@@ -55,6 +56,11 @@ module.exports = {
         }
       },
       {{/tslint}}
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: vueLoaderConfig
+      },
       {
         test: /\.html$/,
         loader: 'vue-template-loader',
