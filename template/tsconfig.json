@@ -4,6 +4,7 @@
     "paths": {
       "*": ["src/*"]
     },
+    "sourceMap": true,
     "experimentalDecorators": true,
     "target": "es6",
     "module": "es2015",
@@ -21,10 +22,6 @@
     ],
     "typeRoots": [
       "node_modules/@types"
-    ],
-    "awesomeTypescriptLoaderOptions": {
-      "useBabel": true,
-      "useCache": true
-    }
+    ]
   }
 }

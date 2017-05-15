@@ -13,7 +13,7 @@ import router from './router'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
 
 Vue.config.productionTip = false{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
 
-// tslint:disable-next-line:no-unused-new
+// tslint:disable-next-line:no-unused-expression
 new Vue({
   el: '#app',
   {{#router}}
