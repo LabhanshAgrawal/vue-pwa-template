@@ -21,10 +21,6 @@
     ],
     "typeRoots": [
       "node_modules/@types"
-    ],
-    "awesomeTypescriptLoaderOptions": {
-      "useBabel": true,
-      "useCache": true
-    }
+    ]
   }
 }
