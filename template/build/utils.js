@@ -63,6 +63,7 @@ exports.styleLoaders = function (options) {
   for (var extension in loaders) {
     var loader = loaders[extension]
     output.push({
+      enforce: 'post', // To support scoped css properly
       test: new RegExp('\\.' + extension + '$'),
       use: loader
     })

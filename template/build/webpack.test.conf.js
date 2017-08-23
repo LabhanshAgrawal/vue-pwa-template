@@ -10,7 +10,7 @@ var webpackConfig = merge(baseConfig, {
   module: {
     rules: utils.styleLoaders()
   },
-  devtool: '#inline-source-map',
+  {{#unless_eq compiler "typescript"}}devtool: '#inline-source-map',{{/unless_eq}}
   resolveLoader: {
     alias: {
       // necessary to to make lang="scss" work in test when using vue-loader's ?inject option
@@ -21,7 +21,12 @@ var webpackConfig = merge(baseConfig, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': require('../config/test.env')
-    })
+    }){{#if_eq compiler "typescript"}},
+    // devtool option doesn't output typescript sourcemaps to karma
+    new webpack.SourceMapDevToolPlugin({
+      filename: null, // if no value is provided the sourcemap is inlined
+      test: /\.(ts|js|html)($|\?)/i
+    }){{/if_eq}}
   ]
 })
 

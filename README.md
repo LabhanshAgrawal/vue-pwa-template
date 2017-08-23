@@ -2,10 +2,33 @@
 
 > A full-featured [PWA](https://developers.google.com/web/progressive-web-apps/) template with webpack, hot-reload, lint-on-save, unit testing & css extraction.
 
+> This template is Vue 2.0 compatible.
+
+> This is a fork of official pwa template. It adds a TypeScript option and allow building components with 
+standard .js/.ts files using external .css and .html files. Developer still benefit of Hot Module Reload and 
+scoped CSS though.
+
+## Why using this fork ?
+
+You should really consider using this fork if ...
+
+- You have issues with `.vue` files in your favorite code editor.
+- You want to stick to pure `.js`/`.ts` files for some reason.
+- You don't want to put HTML, CSS & Script in a single file.
+
+## Known issues with `.vue` files and TypeScript
+
+- Intellij IDEA (and probably others) can't resolve TypeScript modules coming from `.vue` files, making navigation in a vue project really 
+painfull.
+- [tslint doesn't support `.vue` files](https://github.com/palantir/tslint/issues/2099).
+
+Despite those issues exists, you can still import `.vue` [Single Files Components](https://vuejs.org/v2/guide/single-file-components.html) with this 
+boilerplate from your own code or dependency.
+
 ## Documentation
 
 - This template builds on top of the main webpack template, so please refer to the [webpack template docs](http://vuejs-templates.github.io/webpack).
-
+- [For this template](http://toilal.github.io/vue-webpack-template): common questions specific to this template are answered and each part is described in greater detail
 - Check out the [official Vue.js guide](http://vuejs.org/guide/) for general information about Vue that is not specific to this template.
 
 ## Usage
@@ -31,7 +54,7 @@ If port 8080 is already in use on your machine you must change the port number i
 * Lighthouse score of 90+/100
 
 - `npm run dev`: first-in-class development experience.
-  - Webpack + `vue-loader` for single file Vue components.
+  - Webpack + `vue-template-loader` + `vue-hot-reload-loader` for Vue components.
   - State preserving hot-reload
   - State preserving compilation error overlay
   - Lint-on-save with ESLint

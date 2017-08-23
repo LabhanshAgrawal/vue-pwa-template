@@ -2,6 +2,10 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
+var vueTemplateLoaderConfig = require('./vue-template-loader.conf')
+{{#if_eq compiler "typescript"}}
+var ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+{{/if_eq}}
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -9,7 +13,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/main.{{#if_eq compiler "typescript"}}ts{{else}}js{{/if_eq}}'
   },
   output: {
     path: config.build.assetsRoot,
@@ -18,18 +22,27 @@ module.exports = {
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
+  {{#if_eq compiler "typescript"}}
+  plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      watch: './src' // optional but improves performance (less stat calls)
+    })
+  ],{{/if_eq}}
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', {{#if_eq compiler "typescript"}}'.ts', {{/if_eq}}'.json'],
     alias: {
       {{#if_eq build "standalone"}}
-      'vue$': 'vue/dist/vue.esm.js',
+      'vue$': 'vue/dist/vue.esm.js'
       {{/if_eq}}
-      '@': resolve('src')
-    }
+    },
+    modules: [
+      resolve('src'),
+      "node_modules"
+    ]
   },
   module: {
     rules: [
-      {{#lint}}
+      {{#eslint}}
       {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
@@ -39,17 +52,50 @@ module.exports = {
           formatter: require('eslint-friendly-formatter')
         }
       },
-      {{/lint}}
+      {{/eslint}}
+      {{#tslint}}
+      {
+        test: /\.ts$/, // tslint doesn't support vue files
+        enforce: 'pre',
+        loader: 'tslint-loader',
+        include: [resolve('src'), resolve('test')],
+        options: {
+          formatter: 'grouped',
+          formattersDirectory: 'node_modules/custom-tslint-formatters/formatters'
+        }
+      },
+      {{/tslint}}
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
       },
       {
+        test: /\.html$/,
+        loader: 'vue-template-loader',
+        exclude: resolve('index.html'),
+        options: vueTemplateLoaderConfig
+      },
+      {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test')]
       },
+      {{#if_eq compiler "typescript"}}
+      {
+        test: /\.ts$/,
+        use: [{
+          loader: 'babel-loader'
+          }, {
+          loader: 'ts-loader',
+          options: {
+            appendTsSuffixTo: [/\.vue$/],
+            transpileOnly: true // Disable type checking to run it in fork
+          },
+        }],
+        include: [resolve('src'), resolve('test')]
+      },
+      {{/if_eq}}
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
