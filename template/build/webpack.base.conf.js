@@ -61,7 +61,8 @@ module.exports = {
         include: [resolve('src'), resolve('test')],
         options: {
           formatter: 'grouped',
-          formattersDirectory: 'node_modules/custom-tslint-formatters/formatters'
+          formattersDirectory: 'node_modules/custom-tslint-formatters/formatters',
+          typeCheck: true
         }
       },
       {{/tslint}}

@@ -9,6 +9,6 @@ describe('Hello component', () => {
     const hello = new Hello(){{#if_eq eslintConfig 'airbnb'}};{{/if_eq}}
     const vm = hello.$mount(){{#if_eq eslintConfig 'airbnb'}};{{/if_eq}}
     expect(vm.$el.querySelector('.hello h1').textContent)
-      .to.equal('Welcome to Your Vue.js App'){{#if_eq eslintConfig 'airbnb'}};{{/if_eq}}
+      .to.equal('Welcome to Your Vue.js PWA'){{#if_eq eslintConfig 'airbnb'}};{{/if_eq}}
   }){{#if_eq eslintConfig 'airbnb'}};{{/if_eq}}
 }){{#if_eq eslintConfig 'airbnb'}};{{/if_eq}}

@@ -17,5 +17,5 @@ export default class Hello extends Vue {
   {{/if_eq}}{{#unless_eq tslintConfig "airbnb"}}@Prop({type: Boolean, default: true})
   {{/unless_eq}}ecosystem: boolean{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
 
-  msg = 'Welcome to Your Vue.js App'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+  msg = 'Welcome to Your Vue.js PWA'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
 }
